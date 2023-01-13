@@ -1,0 +1,223 @@
+### REMEMBER TO CHECK IF BEARER TOKEN IS CORRECT.
+
+################### USERS #######################
+###
+// GET jwt token for user 1
+POST http://localhost:8080/authenticate
+Content-Type: application/json
+
+{
+    "username": "user_01",
+    "password": "01_user_01"
+}
+
+###
+// GET jwt token for user 2
+POST http://localhost:8080/authenticate
+Content-Type: application/json
+
+{
+    "username": "user_02",
+    "password": "02_user_02"
+}
+
+###
+// GET all users with user 1's token
+GET http://localhost:8080/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MTQ3MjcyLCJpYXQiOjE2MTcxMTEyNzJ9.C-BL7H6546P0rLYyI_iO9yKBjCp0xJEVBQ5zGjOzqXQ
+
+###
+// GET own user with user 1's token
+GET http://localhost:8080/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE2Mjg3OTkxLCJpYXQiOjE2MTYyNTE5OTF9.X-XLPHV-XX-DkHQFPlYa5VWoK7ByG0XG1q2gTQTBTvc
+
+###
+// GET all users with user 2's token
+GET http://localhost:8080/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZWxsZXJfMSIsImV4cCI6MTYxNTc1OTI1OSwiaWF0IjoxNjE1NzIzMjU5fQ.s84Qa45T2HD7yDN_iecX2Xnk1K28Im6F3QFK0kcu2X4
+
+###
+// Add user 3
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+    "username": "user_3",
+    "password": "03_user_03",
+    "authorities": "ROLE_USER",
+    "alias": "Alan"
+}
+
+###
+// GET jwt token for user 3
+POST http://localhost:8080/authenticate
+Content-Type: application/json
+
+{
+    "username": "user_3",
+    "password": "03_user_03"
+}
+
+###
+// GET all users with user 3's token
+GET http://localhost:8080/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJidXllcl8yIiwiZXhwIjoxNjE1NzYwOTIzLCJpYXQiOjE2MTU3MjQ5MjN9.uO8WP-H1ElxlCFCFh78MbDh6WusTdbogX6V_K1fZnp8
+
+###
+// GET own user with user 3's token
+GET http://localhost:8080/users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJidXllcl8yIiwiZXhwIjoxNjE1NzYwOTIzLCJpYXQiOjE2MTU3MjQ5MjN9.uO8WP-H1ElxlCFCFh78MbDh6WusTdbogX6V_K1fZnp8
+
+
+####################### SHOPS ########################
+
+// Get default shop 1 with user 1's token
+GET http://localhost:8080/shop/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MTkxNDU5LCJpYXQiOjE2MTcxNTU0NTl9.3xdw-h6YkNVJGqJjORyiuJqPLtOWO5n9xqs917w53Eg
+###
+// Get default shop 2 with user 1's token
+GET http://localhost:8080/shop/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MDI4MTg2LCJpYXQiOjE2MTY5OTIxODZ9.r9nHCa4hJtWi0oHiD1UjwZe-RtVA0idBJM1-rp4LfVo
+
+###
+// Post a new shop 3 with user 1's token
+// won't work because user 1 has a shop already by default
+POST http://localhost:8080/shop
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzMiLCJleHAiOjE2MTcwMjgyNDYsImlhdCI6MTYxNjk5MjI0Nn0.QuoedkmjLb3L_m9TpcgdTVAXNhbg3WB_-tP7yJlJE1I
+Content-Type: application/json
+
+{
+    "shop_name": "Your Friendly Bakery",
+    "home_baker_id": 0,
+    "description": "Please just buy from us",
+    "verified": false,
+    "location": "AMK",
+    "profile_pic_filename" : "your_friendly_bakery.jpg"
+}
+
+###
+// Update new shop 3 with user 1's token
+// shop_id and home_baker_id won't be changed
+PUT http://localhost:8080/shop
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MDI4Mjc5LCJpYXQiOjE2MTY5OTIyNzl9.ZGDn04ZF2EfCdCdu2QZ5LpVoBHPpnO5nBP1lDh7P_E8
+Content-Type: application/json
+
+{
+    "shop_name": "Your Friendly Bakery",
+    "home_baker_id": 0,
+    "description": "Please just buy from us or not",
+    "verified": true,
+    "location": "AMK",
+    "profile_pic_filename" : "your_friendly_bakery.jpg"
+}
+
+###
+// Get any shop with user 1's token
+GET http://localhost:8080/shop/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE2MzYwMjg0LCJpYXQiOjE2MTYzMjQyODR9.7Z3nurl6mUMqbYhaCzLF3S_CmmdZ4G5_b5PCHpTwsGg
+
+###
+// Delete user's own shop using own JWT token
+DELETE http://localhost:8080/shop
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MDI4MzE1LCJpYXQiOjE2MTY5OTIzMTV9.auayO4jQrE7GE3u38UV7NmkzCRzRZqSfyJ1kUBJWcsY
+
+###
+// Check if user has shop
+GET http://localhost:8080/shopexist
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzMiLCJleHAiOjE2MTY2ODAxNDYsImlhdCI6MTYxNjY0NDE0Nn0.DVD7oDJi_AjXqaL6DKz3ydxdUio-6yoBlLpC6YHUO-8
+
+##################### ORDERS ########################
+// User 1
+GET http://localhost:8080/orders/buyer/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3NjI1NTM2LCJpYXQiOjE2MTc1ODk1MzZ9.CDq8C18OMQljVBwzKS8WSpKpmRekSjL5WM8n85PfbaQ
+
+###
+// User 2
+GET http://localhost:8080/orders/buyer/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAyIiwiZXhwIjoxNjE3MjM2Mzc0LCJpYXQiOjE2MTcyMDAzNzR9.b89jN_lFqF8MPS2mC08BDMKRp7zw31cxhtEKORpN-o8
+
+###
+// User 1 POST
+POST http://localhost:8080/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MzIwNzY4LCJpYXQiOjE2MTcyODQ3Njh9.MMadu6IOf8XI8iz_qNKysngSYUsCMU5au1MdrRpaVmk
+Content-Type: application/json
+
+{
+    "productId": 4,
+    "quantity": 77,
+    "totalPrice": 75.5,
+    "remarks": "testing123",
+    "collectionTime": "2021-03-21 06:52:50"
+}
+
+###
+// User 2 POST
+POST http://localhost:8080/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAyIiwiZXhwIjoxNjE3MjM2Mzc0LCJpYXQiOjE2MTcyMDAzNzR9.b89jN_lFqF8MPS2mC08BDMKRp7zw31cxhtEKORpN-o8
+Content-Type: application/json
+
+{
+    "productId": 1,
+    "quantity": 88,
+    "totalPrice": 85.5,
+    "remarks": "123testing",
+    "collectionTime": "2021-03-21 06:52:50"
+}
+
+###
+// USER PUT
+PUT http://localhost:8080/orders/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MzIwNzY4LCJpYXQiOjE2MTcyODQ3Njh9.MMadu6IOf8XI8iz_qNKysngSYUsCMU5au1MdrRpaVmk
+Content-Type: application/json
+
+{
+    "remarks": "changed123",
+    "status": "Completed",
+    "prepared": true,
+    "collectionTime": "2021-03-21 06:52:50"
+}
+
+###
+// User DELETE
+DELETE http://localhost:8080/orders/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MzIwNzY4LCJpYXQiOjE2MTcyODQ3Njh9.MMadu6IOf8XI8iz_qNKysngSYUsCMU5au1MdrRpaVmk
+
+##################### PRODUCTS ########################
+
+###
+// Get user 1's products
+GET http://localhost:8080/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3NjMzMjE4LCJpYXQiOjE2MTc1OTcyMTh9.9J6Edgcma4fgr13afur1ff1xcdtzWTawaIKfqwpHmsc
+###
+// Get all products with user 1's token
+GET http://localhost:8080/products/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3MDIzNTQ2LCJpYXQiOjE2MTY5ODc1NDZ9.ehZU3DhGoPIicZy_ezPYeDbWvbPhRZlkxStNOs0x2DE
+###
+// Try search any key word related to product name or shop name
+GET http://localhost:8080/search/123123
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3NjI2MzUyLCJpYXQiOjE2MTc1OTAzNTJ9.BONLzEom1l5fsQ_kQQcppF5-mILn6ydfA4o0JE0zGYw
+###
+// Try post a product, shop name auto generated based on user who POST
+POST http://localhost:8080/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyXzAxIiwiZXhwIjoxNjE3NjMzMjE4LCJpYXQiOjE2MTc1OTcyMTh9.9J6Edgcma4fgr13afur1ff1xcdtzWTawaIKfqwpHmsc
+
+{
+    "product_name": "Charcoal Mooncake",
+    "product_type": "Mooncake",
+    "product_description": "To the Moon!",
+    "variations": [
+      "Lavender",
+      "Chocolate",
+      "Durian",
+      "Peach",
+      "Salted"
+    ],
+    "date_listed": 1616514479278,
+    "shopId": 1,
+    "price": 4.5,
+    "dietary_restrictions": null,
+    "ingredients": "Egg, Butter, Milk Powder, Cheese",
+    "available": true
+}
+###
